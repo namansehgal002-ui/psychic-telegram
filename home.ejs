@@ -1,0 +1,41 @@
+<%- include("partials/head", {title:"Home - "+siteName}) %>
+<%- include("partials/nav") %>
+<main class="page">
+<div class="container">
+  <% if(flash){ %><div class="flash <%= flash.type %>"><%= flash.message %></div><% } %>
+  <section class="dashboard-hero">
+    <div><div style="color:#c4d6e1">Welcome back,</div><h1 style="margin:5px 0 10px"><%= user.name %></h1><div class="balance">₹<%= Number(user.balance).toLocaleString("en-IN",{minimumFractionDigits:2}) %></div><small>Available balance</small></div>
+    <div style="font-size:65px;color:#e8bf5b">✦</div>
+  </section>
+  <div class="stats">
+    <div class="stat"><small>Balance</small><strong>₹<%= user.balance.toLocaleString("en-IN",{minimumFractionDigits:2}) %></strong></div>
+    <div class="stat"><small>Recharge</small><strong>₹<%= user.recharge.toLocaleString("en-IN",{minimumFractionDigits:2}) %></strong></div>
+    <div class="stat"><small>Total Income</small><strong>₹<%= user.totalIncome.toLocaleString("en-IN",{minimumFractionDigits:2}) %></strong></div>
+  </div>
+  <div class="quick">
+    <a href="/recharge"><span class="icon">▣</span>Recharge</a>
+    <a href="/withdraw"><span class="icon">⇧</span>Withdraw</a>
+    <a href="/team"><span class="icon">♧</span>Share</a>
+    <a href="/profile"><span class="icon">◯</span>Service</a>
+  </div>
+  <div class="page-title"><div><h1>Investment Plans</h1><p>Choose a plan using your available balance.</p></div></div>
+  <div class="plans">
+    <% plans.forEach(plan => { %>
+      <article class="plan">
+        <div class="plan-image"><span class="limit">Limit 10</span><h3><%= plan.name %></h3></div>
+        <div class="plan-body">
+          <div class="plan-grid">
+            <div class="metric"><strong>₹<%= plan.price.toLocaleString("en-IN",{minimumFractionDigits:2}) %></strong><small>Price</small></div>
+            <div class="metric"><strong>₹<%= plan.daily.toLocaleString("en-IN",{minimumFractionDigits:2}) %></strong><small>Daily Earnings</small></div>
+            <div class="metric"><strong><%= plan.days %></strong><small>Days</small></div>
+            <div class="metric"><strong>₹<%= plan.total.toLocaleString("en-IN",{minimumFractionDigits:2}) %></strong><small>Illustrative total</small></div>
+          </div>
+          <form method="post" action="/plan/<%= plan.id %>/buy"><button class="btn btn-blue buy">🛒 Buy now</button></form>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</div>
+</main>
+<%- include("partials/bottom",{active:"home"}) %>
+<%- include("partials/foot") %>

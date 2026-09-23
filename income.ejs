@@ -1,0 +1,11 @@
+<%- include("partials/head", {title:"Income - "+siteName}) %>
+<%- include("partials/nav") %>
+<main class="page"><div class="container">
+  <div class="page-title"><div><h1>Income & Transactions</h1><p>Your account activity.</p></div></div>
+  <section class="stats"><div class="stat"><small>Balance</small><strong>₹<%=user.balance.toLocaleString("en-IN",{minimumFractionDigits:2})%></strong></div><div class="stat"><small>Total Income</small><strong>₹<%=user.totalIncome.toLocaleString("en-IN",{minimumFractionDigits:2})%></strong></div><div class="stat"><small>Recharge</small><strong>₹<%=user.recharge.toLocaleString("en-IN",{minimumFractionDigits:2})%></strong></div></section>
+  <section class="card"><div style="overflow:auto"><table class="table"><thead><tr><th>Type</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody>
+  <% transactions.forEach(t=>{ %><tr><td><%=t.type.replace("_"," ")%></td><td>₹<%=t.amount.toLocaleString("en-IN",{minimumFractionDigits:2})%></td><td><span class="badge <%=t.status%>"><%=t.status%></span></td><td><%=new Date(t.createdAt).toLocaleString("en-IN")%></td></tr><% }) %>
+  </tbody></table></div></section>
+</div></main>
+<%- include("partials/bottom",{active:"income"}) %>
+<%- include("partials/foot") %>

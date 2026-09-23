@@ -1,0 +1,17 @@
+<%- include("partials/head", {title:"Team - "+siteName}) %>
+<%- include("partials/nav") %>
+<main class="page"><div class="container">
+  <div class="page-title"><div><h1>Team</h1><p>Share your invitation code with people you know.</p></div></div>
+  <section class="dashboard-hero"><div><small>Your invitation code</small><div class="balance" style="font-size:30px"><%=user.referralCode%></div><small>Team recharge and commission rules can be configured by the administrator.</small></div><button class="btn btn-gold" onclick="navigator.clipboard.writeText('<%=user.referralCode%>')">Copy Code</button></section>
+  <section class="card section"><h2>Team Overview</h2><div class="two">
+    <div class="stat"><small>Team Recharge</small><strong>₹0.00</strong></div><div class="stat"><small>Team Size</small><strong><%=team.l1.length+team.l2.length+team.l3.length%></strong></div>
+  </div></section>
+  <% [[1,team.l1,'20%'],[2,team.l2,'5%'],[3,team.l3,'2%']].forEach((x,i)=>{ %>
+  <section class="card team-level">
+    <div class="level <%=i===1?'two-l':i===2?'three-l':''%>"><%=x[0]%></div>
+    <div><h2>Level <%=x[0]%> Members</h2><div style="display:flex;gap:40px;color:#708798"><div>Total Invites<br><b style="color:#102a3b;font-size:22px"><%=x[1].length%></b></div><div>Active Members<br><b style="color:#102a3b;font-size:22px"><%=x[1].filter(u=>u.balance>0).length%></b></div><div>Rate<br><b style="color:#075979"><%=x[2]%></b></div></div></div>
+  </section>
+  <% }) %>
+</div></main>
+<%- include("partials/bottom",{active:"team"}) %>
+<%- include("partials/foot") %>

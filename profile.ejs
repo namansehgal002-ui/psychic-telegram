@@ -1,0 +1,25 @@
+<%- include("partials/head", {title:"My Profile - "+siteName}) %>
+<%- include("partials/nav") %>
+<main class="page"><div class="container">
+  <% if(flash){ %><div class="flash <%= flash.type %>"><%= flash.message %></div><% } %>
+  <div class="page-title"><div><h1>Personal Information</h1><p>Update your account and payout details.</p></div><form method="post" action="/logout"><button class="btn btn-danger">Logout</button></form></div>
+  <section class="card">
+  <form method="post" action="/profile">
+    <div class="profile-grid">
+      <div><label class="label">Name</label><input class="input" name="name" value="<%=user.name%>" required></div>
+      <div><label class="label">Phone</label><input class="input" name="phone" value="<%=user.phone%>" required></div>
+      <div><label class="label">Email</label><input class="input" type="email" name="email" value="<%=user.email%>" required></div>
+      <div><label class="label">UPI ID</label><input class="input" name="upi" value="<%=user.upi%>"></div>
+      <div><label class="label">Bank Account</label><input class="input" name="account" value="<%=user.bank.account%>"></div>
+      <div><label class="label">IFSC</label><input class="input" name="ifsc" value="<%=user.bank.ifsc%>"></div>
+      <div class="full"><label class="label">Account Holder</label><input class="input" name="holder" value="<%=user.bank.holder%>"></div>
+      <div><label class="label">New Login Password (optional)</label><input class="input" type="password" name="password"></div>
+      <div><label class="label">New Withdrawal Password (optional)</label><input class="input" type="password" name="withdrawalPassword"></div>
+    </div>
+    <br><button class="btn btn-blue">Save Changes</button>
+  </form>
+  </section>
+  <section class="card"><h2>Account Details</h2><p><b>Invitation Code:</b> <%=user.referralCode%></p><p><b>Joined:</b> <%=new Date(user.createdAt).toLocaleDateString("en-IN")%></p></section>
+</div></main>
+<%- include("partials/bottom",{active:"profile"}) %>
+<%- include("partials/foot") %>

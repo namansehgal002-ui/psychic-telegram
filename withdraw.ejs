@@ -1,0 +1,21 @@
+<%- include("partials/head", {title:"Withdraw - "+siteName}) %>
+<%- include("partials/nav") %>
+<main class="page"><div class="container">
+  <% if(flash){ %><div class="flash <%= flash.type %>"><%= flash.message %></div><% } %>
+  <div class="page-title"><div><h1>Withdraw</h1><p>Request a withdrawal to your saved UPI or bank details.</p></div></div>
+  <section class="card">
+    <div class="stat" style="background:#f1f8fb"><small>Available balance</small><strong>₹<%= user.balance.toLocaleString("en-IN",{minimumFractionDigits:2}) %></strong></div>
+    <form method="post" action="/withdraw" style="margin-top:18px">
+      <label class="label">Amount</label><input class="input" type="number" name="amount" min="100" step="0.01" placeholder="Enter amount" required>
+      <br><br><label class="label">Withdrawal Password</label><input class="input" type="password" name="withdrawalPassword" required>
+      <br><br><button class="btn btn-blue">Submit Withdrawal</button>
+      <a class="btn btn-ghost" href="/profile">Update payout details</a>
+    </form>
+  </section>
+  <section class="card"><h2>Withdrawal History</h2>
+  <div style="overflow:auto"><table class="table"><thead><tr><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody>
+  <% transactions.forEach(t=>{ %><tr><td>₹<%=t.amount.toLocaleString("en-IN",{minimumFractionDigits:2})%></td><td><span class="badge <%=t.status%>"><%=t.status%></span></td><td><%=new Date(t.createdAt).toLocaleString("en-IN")%></td></tr><% }) %>
+  </tbody></table></div></section>
+</div></main>
+<%- include("partials/bottom",{active:"home"}) %>
+<%- include("partials/foot") %>

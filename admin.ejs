@@ -1,0 +1,21 @@
+<%- include("partials/head", {title:"Admin Dashboard - "+siteName}) %>
+<div class="admin-layout">
+  <aside class="admin-side">
+    <a class="brand" href="/admin"><span class="brand-mark">✦</span><span><%=siteName%><small style="display:block;font-family:Inter;font-size:9px;color:#9aaaba">ADMIN PANEL</small></span></a>
+    <nav class="admin-menu"><a class="active" href="/admin">▦ Dashboard</a><a href="/admin/users">♧ Users</a><a href="/admin/transactions">⇩ Transactions</a><a href="/admin/plans">◫ Plans</a><a href="/home">↗ User Site</a><form method="post" action="/logout"><button class="btn" style="width:100%;background:#ffffff0d;color:#b8c6d4;margin-top:20px">Logout</button></form></nav>
+  </aside>
+  <main class="admin-main">
+    <% if(flash){ %><div class="flash <%=flash.type%>"><%=flash.message%></div><% } %>
+    <div class="admin-title"><div><h1>Dashboard</h1><p style="color:#8fa1b7">Welcome back, here's what's happening today.</p></div></div>
+    <div class="admin-stats">
+      <div class="admin-stat"><small>Total Users</small><strong><%=stats.users.toLocaleString()%></strong></div>
+      <div class="admin-stat"><small>Total Recharge</small><strong>₹<%=stats.recharge.toLocaleString("en-IN",{maximumFractionDigits:0})%></strong></div>
+      <div class="admin-stat"><small>Pending Withdrawals</small><strong>₹<%=stats.pendingWithdraw.toLocaleString("en-IN",{maximumFractionDigits:0})%></strong></div>
+      <div class="admin-stat"><small>Active Plans</small><strong><%=stats.activePlans.toLocaleString()%></strong></div>
+    </div>
+    <section class="admin-card"><h2>Recent Transactions</h2><table class="table"><thead><tr><th>ID</th><th>User</th><th>Type</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody>
+    <% transactions.forEach(t=>{ %><tr><td>#TXN-<%=String(t.id).padStart(5,"0")%></td><td><%=t.user?t.user.name:"Unknown"%></td><td><%=t.type%></td><td>₹<%=t.amount.toLocaleString("en-IN",{minimumFractionDigits:2})%></td><td><span class="badge <%=t.status%>"><%=t.status%></span></td><td><%=new Date(t.createdAt).toLocaleDateString("en-IN")%></td></tr><% }) %>
+    </tbody></table></section>
+  </main>
+</div>
+</body></html>

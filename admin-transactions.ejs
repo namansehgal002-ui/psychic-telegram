@@ -1,0 +1,9 @@
+<%- include("partials/head", {title:"Transactions - "+siteName}) %>
+<div class="admin-layout"><aside class="admin-side"><a class="brand" href="/admin"><span class="brand-mark">✦</span><span><%=siteName%><small style="display:block;font-family:Inter;font-size:9px;color:#9aaaba">ADMIN PANEL</small></span></a><nav class="admin-menu"><a href="/admin">▦ Dashboard</a><a href="/admin/users">♧ Users</a><a class="active" href="/admin/transactions">⇩ Transactions</a><a href="/admin/plans">◫ Plans</a><a href="/home">↗ User Site</a></nav></aside>
+<main class="admin-main"><div class="admin-title"><div><h1>Transactions</h1><p style="color:#8fa1b7">Review recharge and withdrawal requests.</p></div></div>
+<% if(flash){ %><div class="flash <%=flash.type%>"><%=flash.message%></div><% } %>
+<section class="admin-card"><table class="table"><thead><tr><th>ID</th><th>User</th><th>Type</th><th>Amount</th><th>UTR</th><th>Status</th><th>Action</th></tr></thead><tbody>
+<% transactions.forEach(t=>{ %><tr><td>#<%=t.id%></td><td><%=t.user?t.user.name:"Unknown"%><br><small><%=t.user?t.user.phone:""%></small></td><td><%=t.type%></td><td>₹<%=t.amount.toLocaleString("en-IN",{minimumFractionDigits:2})%></td><td><%=t.utr||"—"%></td><td><span class="badge <%=t.status%>"><%=t.status%></span></td><td>
+<% if(t.status==="pending"){ %><form style="display:inline" method="post" action="/admin/transaction/<%=t.id%>/approve"><button class="btn btn-gold">Approve</button></form> <form style="display:inline" method="post" action="/admin/transaction/<%=t.id%>/reject"><button class="btn btn-danger">Reject</button></form><% } else { %>Reviewed<% } %>
+</td></tr><% }) %>
+</tbody></table></section></main></div></body></html>

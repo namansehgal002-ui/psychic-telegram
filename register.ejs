@@ -1,0 +1,26 @@
+<%- include("partials/head", {title:"Register - "+siteName}) %>
+<section class="auth-page">
+  <div class="auth-card">
+    <div class="brand" style="margin-bottom:20px"><span class="brand-mark">✦</span><span><%= siteName %></span></div>
+    <div class="tabs"><a href="/login">Login</a><a class="active" href="/register">Register</a></div>
+    <h1>Create your account</h1><div class="sub">Join to access your account dashboard</div>
+    <% if(flash){ %><div class="flash <%= flash.type %>"><%= flash.message %></div><% } %>
+    <form method="post" action="/register">
+      <div class="form-grid">
+        <div class="field"><label>Full Name *</label><input name="name" required placeholder="Your name"></div>
+        <div class="field"><label>Phone Number *</label><input name="phone" required placeholder="+91 mobile"></div>
+        <div class="field"><label>Email *</label><input type="email" name="email" required placeholder="you@example.com"></div>
+        <div class="field"><label>Invitation Code</label><input name="referral" placeholder="Optional"></div>
+        <div class="field full"><label>UPI ID</label><input name="upi" placeholder="name@bank"></div>
+        <div class="field"><label>Bank Account</label><input name="account" placeholder="Account number"></div>
+        <div class="field"><label>IFSC</label><input name="ifsc" placeholder="IFSC code"></div>
+        <div class="field full"><label>Account Holder</label><input name="holder" placeholder="Bank account holder"></div>
+        <div class="field"><label>Login Password *</label><input type="password" name="password" required></div>
+        <div class="field"><label>Withdrawal Password *</label><input type="password" name="withdrawalPassword" required></div>
+      </div>
+      <button class="btn btn-gold" style="width:100%">Create Account</button>
+    </form>
+    <p style="font-size:12px;color:#aebfca;margin-top:15px">By creating an account you agree to the site's terms and privacy policy.</p>
+  </div>
+</section>
+<%- include("partials/foot") %>

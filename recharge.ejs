@@ -1,0 +1,29 @@
+<%- include("partials/head", {title:"Recharge - "+siteName}) %>
+<%- include("partials/nav") %>
+<main class="page"><div class="container">
+  <% if(flash){ %><div class="flash <%= flash.type %>"><%= flash.message %></div><% } %>
+  <section class="recharge-top"><h1>Recharge</h1><p>Submit your payment reference for admin verification.</p></section>
+  <section class="card section">
+    <h2>Quick Amount</h2>
+    <div class="amounts">
+      <% [499,1899,4999,9999,24999,49999].forEach((a,i)=>{ %>
+        <button type="button" class="amount <%= i===0?'active':'' %>" onclick="document.querySelector('#amount').value=<%=a%>;document.querySelectorAll('.amount').forEach(x=>x.classList.remove('active'));this.classList.add('active')">₹<%=a.toLocaleString("en-IN")%></button>
+      <% }) %>
+    </div>
+  </section>
+  <section class="payment-box section">
+    <h2>Payment Instructions</h2>
+    <div class="notice">Only submit a UTR/reference after you have completed the transfer. Never share your OTP or banking password.</div>
+    <p>Transfer to the configured UPI:</p>
+    <div class="copyrow"><code id="upi"><%= upiId %></code><button class="copy" onclick="navigator.clipboard.writeText(document.querySelector('#upi').innerText)">Copy</button></div>
+    <p>UPI Name: <b><%= upiName %></b></p>
+    <form method="post" action="/recharge">
+      <label class="label">Amount</label><input class="input" id="amount" type="number" name="amount" value="499" min="100" required>
+      <br><br><label class="label">UTR / Reference Number</label><input class="input" name="utr" placeholder="Enter UTR/reference" required>
+      <br><br><button class="btn btn-blue" style="width:100%">Submit Recharge</button>
+    </form>
+  </section>
+  <% if(pending.length){ %><section class="card"><h2>Pending Requests</h2><p>You have <b><%= pending.length %></b> recharge request(s) awaiting verification.</p></section><% } %>
+</div></main>
+<%- include("partials/bottom",{active:"recharge"}) %>
+<%- include("partials/foot") %>

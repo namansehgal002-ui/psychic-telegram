@@ -1,0 +1,7 @@
+<%- include("partials/head", {title:"Plans - "+siteName}) %>
+<div class="admin-layout"><aside class="admin-side"><a class="brand" href="/admin"><span class="brand-mark">✦</span><span><%=siteName%><small style="display:block;font-family:Inter;font-size:9px;color:#9aaaba">ADMIN PANEL</small></span></a><nav class="admin-menu"><a href="/admin">▦ Dashboard</a><a href="/admin/users">♧ Users</a><a href="/admin/transactions">⇩ Transactions</a><a class="active" href="/admin/plans">◫ Plans</a><a href="/home">↗ User Site</a></nav></aside>
+<main class="admin-main"><div class="admin-title"><h1>Plans</h1></div>
+<% if(flash){ %><div class="flash <%=flash.type%>"><%=flash.message%></div><% } %>
+<% plans.forEach(p=>{ %><section class="admin-card"><form class="admin-form" method="post" action="/admin/plans/<%=p.id%>"><div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1.2fr auto;gap:10px;align-items:end">
+<div><small>Name</small><input name="name" value="<%=p.name%>"></div><div><small>Price</small><input name="price" type="number" step="0.01" value="<%=p.price%>"></div><div><small>Daily</small><input name="daily" type="number" step="0.01" value="<%=p.daily%>"></div><div><small>Days</small><input name="days" type="number" value="<%=p.days%>"></div><div><small>Total</small><input name="total" type="number" step="0.01" value="<%=p.total%>"></div><button class="btn btn-gold">Save</button></div></form></section><% }) %>
+</main></div></body></html>
